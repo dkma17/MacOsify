@@ -1,16 +1,25 @@
 @echo off
-title Launching macOSify Win11...
+title macOSify Win11 Launcher
 cd /d "%~dp0"
+
 echo ===================================================
-echo   macOSify Win11 - Direct Launcher (Bypasses SAC)
+echo   macOSify Win11 - Direct Launcher
 echo ===================================================
 echo.
-echo Launching through trusted .NET runtime...
+
+:: Ensure files are unblocked for Windows Defender / SAC
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-ChildItem -Path '%~dp0artifacts\publish\win-x64' -Recurse | Unblock-File -ErrorAction SilentlyContinue"
+
+echo Launching macOSify Win11 with Administrator privileges...
+echo (Please click 'Yes' on the Windows UAC elevation prompt if asked)
 echo.
-dotnet run --project ".\src\MacOSify.Win11\MacOSify.Win11.csproj" -c Release --property:Platform=x64
+
+:: Launch the self-contained executable with elevation prompt
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath '%~dp0artifacts\publish\win-x64\MacOSify.Win11.exe' -Verb RunAs"
+
 if %ERRORLEVEL% NEQ 0 (
     echo.
-    echo Fallback: Trying published executable...
-    start "" ".\artifacts\publish\win-x64\MacOSify.Win11.exe"
+    echo Trying direct execution...
+    start "" "%~dp0artifacts\publish\win-x64\MacOSify.Win11.exe"
 )
-pause
+

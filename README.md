@@ -62,8 +62,8 @@ Ready-to-use distribution packages are generated in the `artifacts/installer` di
 | **Portable Package** | `.zip` | [`artifacts/installer/macOSify-Win11-v1.0.0-Portable-x64.zip`](artifacts/installer/macOSify-Win11-v1.0.0-Portable-x64.zip) | Standalone portable archive. Unpack and launch `MacOSify.Win11.exe` directly without setup. |
 
 ### Cryptographic Checksums (SHA-256)
-- **`macOSify-Win11-Setup-v1.0.0.exe`**: `6A2D5D6EA44435D619D78836736C6F7EA93836A33BF9A947C9AFAB1F0BB17C99`
-- **`macOSify-Win11-v1.0.0-Portable-x64.zip`**: `143064BD8C3A2A59DC05C5868FCD933BC55C0B02C695FE9BA33685CD27BBBB7E`
+- **`macOSify-Win11-Setup-v1.0.0.exe`**: `AFB3D16AC33E2A52845EC69492966B402531009DE2E893E97C82D95C0F07DBAD`
+- **`macOSify-Win11-v1.0.0-Portable-x64.zip`**: `694AE4325E1E7F1FDAE93EC517FE1B66892A980CF83247C430F6004D9B1EA6D9`
 
 ## Build and run from source
 
