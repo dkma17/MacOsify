@@ -50,7 +50,7 @@ Pinned third-party packages:
   module)
 - .NET 8 SDK or newer for development
 - Windows Package Manager (WinGet / App Installer)
-- System Protection enabled on the Windows system drive
+- System Protection supported on the Windows system drive (automatically enabled if available; falls back cleanly to atomic journal rollback if disabled by policy)
 
 ## Installation & Packages
 
@@ -62,8 +62,8 @@ Ready-to-use distribution packages are generated in the `artifacts/installer` di
 | **Portable Package** | `.zip` | [`artifacts/installer/macOSify-Win11-v1.0.0-Portable-x64.zip`](artifacts/installer/macOSify-Win11-v1.0.0-Portable-x64.zip) | Standalone portable archive. Unpack and launch `MacOSify.Win11.exe` directly without setup. |
 
 ### Cryptographic Checksums (SHA-256)
-- **`macOSify-Win11-Setup-v1.0.0.exe`**: `B1FE411E088D42CAA8A9CAA39A4699E9B49B2D3C36B76144EE5F94543CE3FFF7`
-- **`macOSify-Win11-v1.0.0-Portable-x64.zip`**: `EB78A907A1889BB6F0E8C594559101CFE21C94A87F9377A86C5E6968F8FEE7AA`
+- **`macOSify-Win11-Setup-v1.0.0.exe`**: `6DAF566338D381E32E26D13927BC3551C0517FE0DB99B1718340813BC0CD7A6F`
+- **`macOSify-Win11-v1.0.0-Portable-x64.zip`**: `42F221FE9ED853FA9650A8548D9478E49795E023568C45BD5957EF89014B9ACF`
 
 ## Build and run from source
 

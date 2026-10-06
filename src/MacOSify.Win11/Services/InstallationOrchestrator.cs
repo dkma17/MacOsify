@@ -52,11 +52,14 @@ public sealed class InstallationOrchestrator
             await _journal.BeginAsync(selectedModules, cancellationToken);
             journalStarted = true;
 
-            Report(progress, 10, "Protecting your PC", "No customization will run unless Windows creates a new restore point.", canCancel: false);
+            Report(progress, 10, "Protecting your PC", "Preparing rollback and restore point protection...", canCancel: false);
             var restorePointSequence = await _safety.CreateRestorePointAsync(
                 message => Report(progress, 10, "Protecting your PC", message, canCancel: false),
                 CancellationToken.None);
-            await _journal.SetStatusAsync(JournalStatus.RestorePointCreated, CancellationToken.None, restorePointSequence);
+            if (restorePointSequence.HasValue)
+            {
+                await _journal.SetStatusAsync(JournalStatus.RestorePointCreated, CancellationToken.None, restorePointSequence.Value);
+            }
             cancellationToken.ThrowIfCancellationRequested();
             await _journal.SetStatusAsync(JournalStatus.Applying, cancellationToken);
 

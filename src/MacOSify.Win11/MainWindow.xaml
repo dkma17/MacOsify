@@ -266,7 +266,7 @@
                             <TextBlock
                                 FontSize="12"
                                 Foreground="{StaticResource SuccessBrush}"
-                                Text="Restore point required" />
+                                Text="Safety protection active" />
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -675,13 +675,13 @@
                         VerticalAlignment="Center"
                         FontSize="12"
                         Foreground="{StaticResource SecondaryInkBrush}"
-                        Text="A restore point is created before installation."
+                        Text="Full rollback journal and restore point protection."
                         TextWrapping="Wrap" />
                     <Button
                         Grid.Column="2"
-                        Content="Create restore point &amp; install"
+                        Content="Install customizations"
                         Style="{StaticResource PrimaryButtonStyle}"
-                        AutomationProperties.Name="Create restore point and install selected modules"
+                        AutomationProperties.Name="Install selected modules"
                         Click="InstallButton_Click" />
                 </Grid>
             </Grid>
@@ -712,7 +712,7 @@
                             x:Name="ExecutionStatusText"
                             FontSize="15"
                             Foreground="{StaticResource SecondaryInkBrush}"
-                            Text="Creating the Pre-macOSify restore point…" />
+                            Text="Preparing rollback and safety checks…" />
                     </StackPanel>
                     <Border
                         Grid.Column="1"

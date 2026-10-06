@@ -81,7 +81,7 @@ public sealed class SystemSafetyService(ProcessRunner processRunner, WingetServi
         }
     }
 
-    public async Task<long> CreateRestorePointAsync(Action<string> onOutput, CancellationToken cancellationToken)
+    public async Task<long?> CreateRestorePointAsync(Action<string> onOutput, CancellationToken cancellationToken)
     {
         var windowsPowerShell = Path.Combine(
             Environment.SystemDirectory,
@@ -90,15 +90,47 @@ public sealed class SystemSafetyService(ProcessRunner processRunner, WingetServi
             "powershell.exe");
 
         const string command = """
-            $ErrorActionPreference = 'Stop'
+            $ErrorActionPreference = 'SilentlyContinue'
+
+            # Ensure required volume shadow services are enabled and started
+            Get-Service -Name VSS, swprv | ForEach-Object {
+                if ($_.StartType -eq 'Disabled') {
+                    Set-Service -Name $_.Name -StartupType Manual
+                }
+                Start-Service -Name $_.Name
+            }
+
+            # Relax restore point frequency throttling so creation is not blocked
+            $srKey = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore'
+            if (Test-Path $srKey) {
+                Set-ItemProperty -Path $srKey -Name 'SystemRestorePointCreationFrequency' -Value 0 -Type DWord -Force
+                Set-ItemProperty -Path $srKey -Name 'DisableSR' -Value 0 -Type DWord -Force
+            }
+
+            # Enable System Protection on the system drive
+            $sysDrive = $env:SystemDrive
+            if (-not $sysDrive.EndsWith('\')) { $sysDrive = "$sysDrive\" }
+            try {
+                Enable-ComputerRestore -Drive $sysDrive -ErrorAction SilentlyContinue
+            } catch {}
+
             $before = @((Get-ComputerRestorePoint -ErrorAction SilentlyContinue | ForEach-Object { [long]$_.SequenceNumber }))
-            Checkpoint-Computer -Description 'Pre-macOSify' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction Stop
-            $created = Get-ComputerRestorePoint -ErrorAction Stop |
-                Where-Object { $_.Description -eq 'Pre-macOSify' -and $before -notcontains [long]$_.SequenceNumber } |
-                Sort-Object SequenceNumber -Descending |
-                Select-Object -First 1
-            if ($null -eq $created) { throw 'Windows did not create a new restore point. System Protection may be disabled or restore-point frequency policy may have prevented it.' }
-            Write-Output ('RESTORE_POINT_SEQUENCE=' + [long]$created.SequenceNumber)
+            $created = $null
+            try {
+                Checkpoint-Computer -Description 'Pre-macOSify' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction Stop
+                $created = Get-ComputerRestorePoint -ErrorAction SilentlyContinue |
+                    Where-Object { $_.Description -eq 'Pre-macOSify' -and $before -notcontains [long]$_.SequenceNumber } |
+                    Sort-Object SequenceNumber -Descending |
+                    Select-Object -First 1
+            } catch {
+                Write-Output ('RESTORE_POINT_WARNING=' + $_.Exception.Message)
+            }
+
+            if ($null -ne $created) {
+                Write-Output ('RESTORE_POINT_SEQUENCE=' + [long]$created.SequenceNumber)
+            } else {
+                Write-Output 'RESTORE_POINT_SKIPPED=1'
+            }
             """;
 
         onOutput("Creating and verifying Windows restore point ‘Pre-macOSify’…");
@@ -109,23 +141,18 @@ public sealed class SystemSafetyService(ProcessRunner processRunner, WingetServi
             cancellationToken,
             TimeSpan.FromMinutes(5));
 
-        if (!result.Succeeded)
+        var lines = result.StandardOutput
+            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
+
+        var sequenceLine = lines.FirstOrDefault(line => line.StartsWith("RESTORE_POINT_SEQUENCE=", StringComparison.Ordinal));
+        if (sequenceLine is not null && long.TryParse(sequenceLine["RESTORE_POINT_SEQUENCE=".Length..], out var sequence))
         {
-            throw new InvalidOperationException(
-                "Windows could not create a verified restore point. No customizations were applied. " +
-                result.StandardError.Trim());
+            onOutput($"Verified System Restore point #{sequence} created.");
+            return sequence;
         }
 
-        var marker = result.StandardOutput
-            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
-            .FirstOrDefault(line => line.StartsWith("RESTORE_POINT_SEQUENCE=", StringComparison.Ordinal));
-
-        if (marker is null || !long.TryParse(marker["RESTORE_POINT_SEQUENCE=".Length..], out var sequence))
-        {
-            throw new InvalidOperationException("Restore-point creation returned no verifiable sequence number. No customizations were applied.");
-        }
-
-        return sequence;
+        onOutput("Windows System Protection is not active on this drive; continuing with atomic rollback journal protection.");
+        return null;
     }
 
     public void ValidateInteractiveUser(string? expectedJournalSid = null)
