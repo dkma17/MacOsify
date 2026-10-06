@@ -4,6 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+
             <Color x:Key="AccentColor">#FF0A84FF</Color>
             <Color x:Key="AccentHoverColor">#FF0077E6</Color>
             <Color x:Key="InkColor">#FF172033</Color>
