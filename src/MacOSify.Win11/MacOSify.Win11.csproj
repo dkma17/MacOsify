@@ -26,4 +26,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <Target Name="CopyWinUIResources" AfterTargets="Build;Publish">
+    <ItemGroup>
+      <_WinUIXbfFiles Include="$(TargetDir)**\*.xbf" />
+      <_WinUIPriFiles Include="$(TargetDir)**\*.pri" />
+    </ItemGroup>
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).pri" DestinationFiles="$(TargetDir)resources.pri" SkipUnchangedFiles="true" Condition="Exists('$(TargetDir)$(AssemblyName).pri')" />
+    <Copy SourceFiles="@(_WinUIXbfFiles)" DestinationFolder="$(PublishDir)%(RecursiveDir)" SkipUnchangedFiles="true" Condition="'$(PublishDir)' != ''" />
+    <Copy SourceFiles="@(_WinUIPriFiles)" DestinationFolder="$(PublishDir)%(RecursiveDir)" SkipUnchangedFiles="true" Condition="'$(PublishDir)' != ''" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).pri" DestinationFiles="$(PublishDir)resources.pri" SkipUnchangedFiles="true" Condition="'$(PublishDir)' != '' and Exists('$(TargetDir)$(AssemblyName).pri')" />
+  </Target>
 </Project>

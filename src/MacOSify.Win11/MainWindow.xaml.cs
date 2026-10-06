@@ -23,7 +23,23 @@ public sealed partial class MainWindow : Window
 
     public MainWindow()
     {
-        InitializeComponent();
+        try
+        {
+            InitializeComponent();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ERROR in MainWindow]: {ex}");
+            try
+            {
+                var dir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "MacOSifyWin11");
+                System.IO.Directory.CreateDirectory(dir);
+                var err = $"EXCEPTION: {ex.GetType().FullName}\nMSG: {ex.Message}\nHR: 0x{ex.HResult:X8}\nSTACK: {ex.StackTrace}\nINNER: {ex.InnerException}";
+                System.IO.File.WriteAllText(System.IO.Path.Combine(dir, "mainwindow_error.txt"), err);
+            }
+            catch { }
+            throw;
+        }
 
         _journal = new OperationJournalService();
         var processRunner = new ProcessRunner();
