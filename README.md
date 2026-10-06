@@ -52,7 +52,20 @@ Pinned third-party packages:
 - Windows Package Manager (WinGet / App Installer)
 - System Protection enabled on the Windows system drive
 
-## Build and run
+## Installation & Packages
+
+Ready-to-use distribution packages are generated in the `artifacts/installer` directory:
+
+| Package | Format | Path / Filename | Description |
+| --- | --- | --- | --- |
+| **Windows Setup Installer** | `.exe` (Inno Setup) | [`artifacts/installer/macOSify-Win11-Setup-v1.0.0.exe`](artifacts/installer/macOSify-Win11-Setup-v1.0.0.exe) | Single-file setup installer with automatic UAC elevation, Start Menu & Desktop shortcuts, and full uninstaller registration. |
+| **Portable Package** | `.zip` | [`artifacts/installer/macOSify-Win11-v1.0.0-Portable-x64.zip`](artifacts/installer/macOSify-Win11-v1.0.0-Portable-x64.zip) | Standalone portable archive. Unpack and launch `MacOSify.Win11.exe` directly without setup. |
+
+### Cryptographic Checksums (SHA-256)
+- **`macOSify-Win11-Setup-v1.0.0.exe`**: `6A2D5D6EA44435D619D78836736C6F7EA93836A33BF9A947C9AFAB1F0BB17C99`
+- **`macOSify-Win11-v1.0.0-Portable-x64.zip`**: `143064BD8C3A2A59DC05C5868FCD933BC55C0B02C695FE9BA33685CD27BBBB7E`
+
+## Build and run from source
 
 Open a new terminal after installing the .NET SDK:
 

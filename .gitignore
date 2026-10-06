@@ -9,3 +9,6 @@ BundleArtifacts/
 Generated Files/
 TestResults/
 publish/
+artifacts/publish/
+artifacts/installer/*.exe
+artifacts/installer/*.zip
