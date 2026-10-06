@@ -1,0 +1,74 @@
+{
+  "id": "cursors",
+  "displayName": "macOS Cursor Scheme",
+  "applyScript": "apply.ps1",
+  "applySha256": "3fde2e520c71a7fa57432437d9cf63cfa0cd7dc75426f0b9bda0b4aca595313f",
+  "revertScript": "revert.ps1",
+  "revertSha256": "95c3f10d91131ed409638454d675834552118e636e226d49cfe8ac27e3196467",
+  "assets": [
+    {
+      "path": "pack/Install.inf",
+      "sha256": "97d72835f7ef7c7842a18d84d298ec1781bd02d06259468dbefbc133ddaacb71"
+    },
+    {
+      "path": "pack/macOS_Alternate.cur",
+      "sha256": "90338cf3186cd9a543dc8f487ede93d938bea1720bb9d798accc69017b31953e"
+    },
+    {
+      "path": "pack/macOS_Arrow.cur",
+      "sha256": "c5176f9caeaf864f0c12f1c207b0e9615b04bc67c55a05453dadb756a687da69"
+    },
+    {
+      "path": "pack/macOS_Busy.cur",
+      "sha256": "be28bc54732500ef6f92ec6f3f99c124ae1ae50b0904ed53e2947a8290778211"
+    },
+    {
+      "path": "pack/macOS_Handwriting.cur",
+      "sha256": "0bd4ad02b3a1300e384f75f4cdb75696705ad89049be5d00f14810ea4c886254"
+    },
+    {
+      "path": "pack/macOS_Help.cur",
+      "sha256": "3b5575c6d234c190702628839f477761ea001180686ac4c30b94d046d08d5099"
+    },
+    {
+      "path": "pack/macOS_Link.cur",
+      "sha256": "c94b26797fddc294c5f45c0ecf5d0b0f034b2a990f3141830f51febc3c951add"
+    },
+    {
+      "path": "pack/macOS_Move.cur",
+      "sha256": "55c4edde40a51bff422229cab152b05d67d30460ab1ec1477bccbd72425dfa0b"
+    },
+    {
+      "path": "pack/macOS_Precision.cur",
+      "sha256": "1ad6b6a308916997307ad239077644462cb1fdb1d40a4e5ae1aae279d2e3841a"
+    },
+    {
+      "path": "pack/macOS_ResizeNESW.cur",
+      "sha256": "9f84b1760e9dfc9f1079c6c5bc714d69c345e6b47e6b5297a4d89c1538389614"
+    },
+    {
+      "path": "pack/macOS_ResizeNS.cur",
+      "sha256": "a924a5be3b16e5fdd29de87bc0427f17c5ef1abeb3ae892b36375dae35247168"
+    },
+    {
+      "path": "pack/macOS_ResizeNWSE.cur",
+      "sha256": "3e147e9a7cb04ccac12ed718351fdf1b0e34457e6e3b3e290df1dafb30a0d28d"
+    },
+    {
+      "path": "pack/macOS_ResizeWE.cur",
+      "sha256": "6f4ddf6647d9bb54a2041185d718f5b8a4797da9c97727ff75b6ff5b694dffc4"
+    },
+    {
+      "path": "pack/macOS_Text.cur",
+      "sha256": "1502b676d9da3cbef1e6e31b50c736887cf46040a909ebcfbb64068dc6be5a84"
+    },
+    {
+      "path": "pack/macOS_Unavailable.cur",
+      "sha256": "95ead8467d6cb7f9bbba669ebcd22122553769ad965d92626a6f94693565a276"
+    },
+    {
+      "path": "pack/macOS_Working.cur",
+      "sha256": "c2af9e9a969951466b9adc8fceccc2ad476ba05c8d5250f418967d4d59d5f653"
+    }
+  ]
+}

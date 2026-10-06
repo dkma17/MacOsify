@@ -1,0 +1,899 @@
+<Window
+    x:Class="MacOSify.Win11.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="macOSify Win11">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop Kind="BaseAlt" />
+    </Window.SystemBackdrop>
+
+    <Grid Background="#DCF4F6FA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Custom window chrome. The large hit targets contain the familiar
+             macOS-sized dots without making the controls difficult to use. -->
+        <Grid
+            Grid.Row="0"
+            Background="#3DFFFFFF"
+            BorderBrush="{StaticResource HairlineBrush}"
+            BorderThickness="0,0,0,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="144" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Column="0"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    Style="{StaticResource MacWindowButtonStyle}"
+                    AutomationProperties.Name="Close macOSify Win11"
+                    Click="CloseButton_Click"
+                    ToolTipService.ToolTip="Close">
+                    <Ellipse
+                        Width="13"
+                        Height="13"
+                        Fill="#FFFF5F57"
+                        Stroke="#33000000"
+                        StrokeThickness="1" />
+                </Button>
+                <Button
+                    Style="{StaticResource MacWindowButtonStyle}"
+                    AutomationProperties.Name="Minimize macOSify Win11"
+                    Click="MinimizeButton_Click"
+                    ToolTipService.ToolTip="Minimize">
+                    <Ellipse
+                        Width="13"
+                        Height="13"
+                        Fill="#FFFFBD2E"
+                        Stroke="#33000000"
+                        StrokeThickness="1" />
+                </Button>
+                <Grid
+                    Width="36"
+                    Height="36"
+                    ToolTipService.ToolTip="Maximize is unavailable during installation">
+                    <Ellipse
+                        Width="13"
+                        Height="13"
+                        Fill="#FF28C840"
+                        Stroke="#33000000"
+                        StrokeThickness="1" />
+                </Grid>
+            </StackPanel>
+
+            <Grid
+                x:Name="TitleBarDragRegion"
+                Grid.Column="1"
+                Background="Transparent">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    FontWeight="SemiBold"
+                    Text="macOSify Win11" />
+            </Grid>
+
+            <!-- The right margin leaves room for the system-reserved caption area. -->
+            <StackPanel
+                Grid.Column="2"
+                Margin="0,0,18,0"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="10">
+                <FontIcon
+                    FontSize="12"
+                    Foreground="{StaticResource SuccessBrush}"
+                    Glyph="&#xE73E;" />
+                <TextBlock
+                    x:Name="AdminStatusText"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{StaticResource SecondaryInkBrush}"
+                    Text="Administrator access" />
+                <Rectangle
+                    Width="1"
+                    Height="16"
+                    Fill="{StaticResource HairlineBrush}" />
+                <TextBlock
+                    x:Name="StepLabel"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{StaticResource SecondaryInkBrush}"
+                    Text="Welcome · 1 of 4" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <!-- Welcome -->
+            <Grid
+                x:Name="WelcomePage"
+                Padding="32,20,32,18">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ScrollViewer
+                    Grid.Row="0"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalScrollMode="Auto">
+                    <StackPanel
+                        MaxWidth="720"
+                        Margin="0,24,0,20"
+                        HorizontalAlignment="Center"
+                        Spacing="18">
+                        <Border
+                            Width="82"
+                            Height="82"
+                            HorizontalAlignment="Center"
+                            CornerRadius="24">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#FF91D7FF" Offset="0" />
+                                    <GradientStop Color="#FF6B7CFF" Offset="0.55" />
+                                    <GradientStop Color="#FFD96FF8" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <FontIcon
+                                FontSize="38"
+                                Foreground="White"
+                                Glyph="&#xE7F8;" />
+                        </Border>
+
+                        <TextBlock
+                            Style="{StaticResource DisplayTitleStyle}"
+                            FontSize="44"
+                            Text="Make Windows feel like Mac."
+                            TextAlignment="Center" />
+                        <TextBlock
+                            FontSize="17"
+                            Foreground="{StaticResource SecondaryInkBrush}"
+                            LineHeight="27"
+                            Text="Choose the parts you want. macOSify creates a restore point first, records every change, and keeps a clear route back to Windows defaults."
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+
+                        <Border
+                            Margin="0,8,0,0"
+                            Padding="18"
+                            Background="#14F79009"
+                            BorderBrush="#38F79009"
+                            BorderThickness="1"
+                            CornerRadius="14">
+                            <Grid ColumnSpacing="14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <FontIcon
+                                    Margin="1,1,0,0"
+                                    FontSize="21"
+                                    Foreground="{StaticResource WarningBrush}"
+                                    Glyph="&#xE7BA;" />
+                                <StackPanel Grid.Column="1" Spacing="5">
+                                    <TextBlock
+                                        FontWeight="SemiBold"
+                                        Text="System changes require care" />
+                                    <TextBlock
+                                        FontSize="13"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        LineHeight="19"
+                                        Text="macOSify runs with administrator access. Installation stops if the “Pre-macOSify” restore point cannot be created. Appearance tools can trigger security prompts and some selections may require a restart."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <StackPanel
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="12">
+                            <Button
+                                Content="Begin"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                AutomationProperties.Name="Begin customization setup"
+                                Click="BeginButton_Click" />
+                            <Button
+                                Content="Revert to Windows Default"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                AutomationProperties.Name="Revert installed customizations to Windows defaults"
+                                Click="RevertButton_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <TextBlock
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{StaticResource SecondaryInkBrush}"
+                    Text="Restore point first  ·  Verified packages  ·  Reversible changes"
+                    TextAlignment="Center" />
+            </Grid>
+
+            <!-- Options -->
+            <Grid
+                x:Name="OptionsPage"
+                Padding="48,28,48,26"
+                Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid ColumnSpacing="24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Spacing="5">
+                        <TextBlock
+                            Style="{StaticResource DisplayTitleStyle}"
+                            FontSize="31"
+                            Text="Choose your look" />
+                        <TextBlock
+                            FontSize="15"
+                            Foreground="{StaticResource SecondaryInkBrush}"
+                            Text="Select only the modules you want macOSify to install." />
+                    </StackPanel>
+                    <Border
+                        Grid.Column="1"
+                        Padding="12,7"
+                        VerticalAlignment="Center"
+                        Background="#1428C840"
+                        BorderBrush="#3028C840"
+                        BorderThickness="1"
+                        CornerRadius="14">
+                        <StackPanel Orientation="Horizontal" Spacing="7">
+                            <FontIcon
+                                FontSize="13"
+                                Foreground="{StaticResource SuccessBrush}"
+                                Glyph="&#xE73E;" />
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{StaticResource SuccessBrush}"
+                                Text="Restore point required" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <ScrollViewer
+                    Grid.Row="1"
+                    Margin="0,20,0,20"
+                    HorizontalScrollBarVisibility="Auto"
+                    HorizontalScrollMode="Auto"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalScrollMode="Auto">
+                    <Grid MinWidth="870" ColumnSpacing="14" RowSpacing="14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Border MinHeight="230" Style="{StaticResource ModuleCardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Height="100"
+                                    Background="#147C5CFC"
+                                    CornerRadius="12">
+                                    <Grid CornerRadius="12">
+                                        <Image
+                                            x:Name="DockPreviewImage"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Stretch="UniformToFill" />
+                                        <Border
+                                            Margin="8"
+                                            Padding="7,4"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Background="#99000000"
+                                            CornerRadius="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon FontSize="10" Foreground="White" Glyph="&#xE8A9;" />
+                                                <TextBlock FontSize="10" FontWeight="SemiBold" Foreground="White" Text="Dock" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="0,11,0,10" Spacing="4">
+                                    <TextBlock
+                                        FontSize="17"
+                                        FontWeight="SemiBold"
+                                        Text="Dock" />
+                                    <TextBlock
+                                        FontSize="13"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Auto-hide the Windows taskbar and install Nexus Dock with pre-made macOS Sonoma theme profile."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Grid Grid.Row="2">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Install module" />
+                                    <ToggleSwitch
+                                        x:Name="DockToggle"
+                                        HorizontalAlignment="Right"
+                                        IsOn="True"
+                                        Style="{StaticResource ModuleToggleStyle}"
+                                        AutomationProperties.Name="Install Dock module" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Grid.Column="1"
+                            MinHeight="230"
+                            Style="{StaticResource ModuleCardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Height="100"
+                                    Background="#140A84FF"
+                                    CornerRadius="12">
+                                    <Grid CornerRadius="12">
+                                        <Image
+                                            x:Name="TopBarPreviewImage"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Stretch="UniformToFill" />
+                                        <Border
+                                            Margin="8"
+                                            Padding="7,4"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Background="#99000000"
+                                            CornerRadius="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon FontSize="10" Foreground="White" Glyph="&#xE7C9;" />
+                                                <TextBlock FontSize="10" FontWeight="SemiBold" Foreground="White" Text="Menu Bar" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="0,11,0,10" Spacing="4">
+                                    <TextBlock
+                                        FontSize="17"
+                                        FontWeight="SemiBold"
+                                        Text="Top Bar" />
+                                    <TextBlock
+                                        FontSize="13"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Install Rainmeter and activate the macOS Top Menu Bar suite with live clock and system controls."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Grid Grid.Row="2">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Install module" />
+                                    <ToggleSwitch
+                                        x:Name="TopBarToggle"
+                                        HorizontalAlignment="Right"
+                                        IsOn="True"
+                                        Style="{StaticResource ModuleToggleStyle}"
+                                        AutomationProperties.Name="Install Top Bar module" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Grid.Column="2"
+                            MinHeight="230"
+                            Style="{StaticResource ModuleCardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Height="100"
+                                    Background="#14F04438"
+                                    CornerRadius="12">
+                                    <Grid CornerRadius="12">
+                                        <Image
+                                            x:Name="ThemePreviewImage"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Stretch="UniformToFill" />
+                                        <Border
+                                            Margin="8"
+                                            Padding="7,4"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Background="#99000000"
+                                            CornerRadius="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon FontSize="10" Foreground="White" Glyph="&#xE790;" />
+                                                <TextBlock FontSize="10" FontWeight="SemiBold" Foreground="White" Text="Sonoma Theme" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="0,11,0,10" Spacing="4">
+                                    <TextBlock
+                                        FontSize="17"
+                                        FontWeight="SemiBold"
+                                        Text="System Theme" />
+                                    <TextBlock
+                                        FontSize="13"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Apply macOS Sonoma wallpaper, Apple Aqua accent palette, light surfaces, and transparency."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Grid Grid.Row="2">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Wallpaper &amp; appearance" />
+                                    <ToggleSwitch
+                                        x:Name="ThemeToggle"
+                                        HorizontalAlignment="Right"
+                                        IsOn="True"
+                                        Style="{StaticResource ModuleToggleStyle}"
+                                        AutomationProperties.Name="Install System Theme module" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Grid.Row="1"
+                            MinHeight="230"
+                            Style="{StaticResource ModuleCardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Height="100"
+                                    Background="#1428C840"
+                                    CornerRadius="12">
+                                    <Grid CornerRadius="12">
+                                        <Image
+                                            x:Name="IconsPreviewImage"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Stretch="UniformToFill" />
+                                        <Border
+                                            Margin="8"
+                                            Padding="7,4"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Background="#99000000"
+                                            CornerRadius="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon FontSize="10" Foreground="White" Glyph="&#xE8B9;" />
+                                                <TextBlock FontSize="10" FontWeight="SemiBold" Foreground="White" Text="Mac Icons" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="0,11,0,10" Spacing="4">
+                                    <TextBlock
+                                        FontSize="17"
+                                        FontWeight="SemiBold"
+                                        Text="Icons" />
+                                    <TextBlock
+                                        FontSize="13"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Transform system folders, drive icons, and Recycle Bin with verified macOS Big Sur/Sonoma icons."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Grid Grid.Row="2">
+                                    <TextBlock
+                                        x:Name="IconsAvailabilityText"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Verified pack ready" />
+                                    <ToggleSwitch
+                                        x:Name="IconsToggle"
+                                        HorizontalAlignment="Right"
+                                        IsOn="True"
+                                        Style="{StaticResource ModuleToggleStyle}"
+                                        AutomationProperties.Name="Install Icons module" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            MinHeight="230"
+                            Style="{StaticResource ModuleCardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Height="100"
+                                    Background="#14000000"
+                                    CornerRadius="12">
+                                    <Grid CornerRadius="12">
+                                        <Image
+                                            x:Name="CursorsPreviewImage"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Stretch="UniformToFill" />
+                                        <Border
+                                            Margin="8"
+                                            Padding="7,4"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Background="#99000000"
+                                            CornerRadius="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon FontSize="10" Foreground="White" Glyph="&#xE8B0;" />
+                                                <TextBlock FontSize="10" FontWeight="SemiBold" Foreground="White" Text="Mac Cursors" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="0,11,0,10" Spacing="4">
+                                    <TextBlock
+                                        FontSize="17"
+                                        FontWeight="SemiBold"
+                                        Text="Cursors" />
+                                    <TextBlock
+                                        FontSize="13"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Install and activate the verified macOS cursor scheme with crisp black pointers and beachball wait wheel."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Grid Grid.Row="2">
+                                    <TextBlock
+                                        x:Name="CursorsAvailabilityText"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Verified pack ready" />
+                                    <ToggleSwitch
+                                        x:Name="CursorsToggle"
+                                        HorizontalAlignment="Right"
+                                        IsOn="True"
+                                        Style="{StaticResource ModuleToggleStyle}"
+                                        AutomationProperties.Name="Install Cursors module" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            MinHeight="230"
+                            Style="{StaticResource ModuleCardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Height="100"
+                                    Background="#148E8E93"
+                                    CornerRadius="12">
+                                    <Grid CornerRadius="12">
+                                        <Image
+                                            x:Name="EffectsPreviewImage"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Stretch="UniformToFill" />
+                                        <Border
+                                            Margin="8"
+                                            Padding="7,4"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Background="#99000000"
+                                            CornerRadius="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="5">
+                                                <FontIcon FontSize="10" Foreground="White" Glyph="&#xE737;" />
+                                                <TextBlock FontSize="10" FontWeight="SemiBold" Foreground="White" Text="Acrylic Blur" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <StackPanel Grid.Row="1" Margin="0,11,0,10" Spacing="4">
+                                    <TextBlock
+                                        FontSize="17"
+                                        FontWeight="SemiBold"
+                                        Text="Window Effects" />
+                                    <TextBlock
+                                        FontSize="13"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Enable transparency and configure Mica For Everyone with rounded corners and Acrylic blur."
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                                <Grid Grid.Row="2">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource SecondaryInkBrush}"
+                                        Text="Install module" />
+                                    <ToggleSwitch
+                                        x:Name="EffectsToggle"
+                                        HorizontalAlignment="Right"
+                                        IsOn="True"
+                                        Style="{StaticResource ModuleToggleStyle}"
+                                        AutomationProperties.Name="Install Window Effects module" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+
+                <Grid Grid.Row="2" ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Content="Back"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Click="BackToWelcomeButton_Click" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="12,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{StaticResource SecondaryInkBrush}"
+                        Text="A restore point is created before installation."
+                        TextWrapping="Wrap" />
+                    <Button
+                        Grid.Column="2"
+                        Content="Create restore point &amp; install"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        AutomationProperties.Name="Create restore point and install selected modules"
+                        Click="InstallButton_Click" />
+                </Grid>
+            </Grid>
+
+            <!-- Execution -->
+            <Grid
+                x:Name="ExecutionPage"
+                Padding="56,34,56,30"
+                Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid ColumnSpacing="24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Spacing="6">
+                        <TextBlock
+                            Style="{StaticResource DisplayTitleStyle}"
+                            FontSize="31"
+                            Text="Installing your customizations" />
+                        <TextBlock
+                            x:Name="ExecutionStatusText"
+                            FontSize="15"
+                            Foreground="{StaticResource SecondaryInkBrush}"
+                            Text="Creating the Pre-macOSify restore point…" />
+                    </StackPanel>
+                    <Border
+                        Grid.Column="1"
+                        Padding="12,7"
+                        VerticalAlignment="Center"
+                        Background="#1428C840"
+                        BorderBrush="#3028C840"
+                        BorderThickness="1"
+                        CornerRadius="14">
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{StaticResource SuccessBrush}"
+                            Text="Changes are journaled" />
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="0,25,0,18">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ProgressBar
+                        x:Name="InstallProgress"
+                        Height="8"
+                        Minimum="0"
+                        Maximum="100"
+                        Value="0"
+                        CornerRadius="4"
+                        AutomationProperties.Name="Installation progress" />
+                    <TextBlock
+                        x:Name="ProgressText"
+                        Grid.Row="1"
+                        Margin="0,8,0,0"
+                        HorizontalAlignment="Right"
+                        FontSize="12"
+                        Foreground="{StaticResource SecondaryInkBrush}"
+                        Text="0%" />
+                </Grid>
+
+                <Border
+                    Grid.Row="2"
+                    Padding="20"
+                    Background="{StaticResource LogSurfaceBrush}"
+                    BorderBrush="#22FFFFFF"
+                    BorderThickness="1"
+                    CornerRadius="16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Margin="0,0,0,14">
+                            <StackPanel Orientation="Horizontal" Spacing="7">
+                                <Ellipse Width="10" Height="10" Fill="#FFFF5F57" />
+                                <Ellipse Width="10" Height="10" Fill="#FFFFBD2E" />
+                                <Ellipse Width="10" Height="10" Fill="#FF28C840" />
+                            </StackPanel>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="12"
+                                Foreground="#AFFFFFFF"
+                                Text="Installation activity" />
+                        </Grid>
+                        <ScrollViewer
+                            x:Name="LogScrollViewer"
+                            Grid.Row="1"
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto"
+                            VerticalScrollMode="Auto">
+                            <TextBlock
+                                x:Name="LogText"
+                                FontFamily="Cascadia Mono, Consolas"
+                                FontSize="13"
+                                Foreground="#FFD1FAE5"
+                                IsTextSelectionEnabled="True"
+                                LineHeight="21"
+                                Text="[ready] Beginning administrator and safety checks…"
+                                TextWrapping="Wrap" />
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="3" Margin="0,20,0,0">
+                    <TextBlock
+                        MaxWidth="610"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{StaticResource SecondaryInkBrush}"
+                        Text="You can cancel safely. Completed operations will be rolled back in reverse order."
+                        TextWrapping="Wrap" />
+                    <Button
+                        x:Name="CancelInstallButton"
+                        HorizontalAlignment="Right"
+                        Content="Cancel and roll back"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        AutomationProperties.Name="Cancel installation and roll back completed changes"
+                        Click="CancelInstallButton_Click" />
+                </Grid>
+            </Grid>
+
+            <!-- Complete -->
+            <Grid
+                x:Name="CompletePage"
+                Padding="48,32"
+                Visibility="Collapsed">
+                <ScrollViewer
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <StackPanel
+                        MaxWidth="650"
+                        Margin="0,28"
+                        HorizontalAlignment="Center"
+                        Spacing="17">
+                        <Border
+                            Width="86"
+                            Height="86"
+                            HorizontalAlignment="Center"
+                            Background="#1828C840"
+                            CornerRadius="43">
+                            <FontIcon
+                                FontSize="40"
+                                Foreground="{StaticResource SuccessBrush}"
+                                Glyph="&#xE73E;" />
+                        </Border>
+                        <TextBlock
+                            x:Name="CompleteTitleText"
+                            Style="{StaticResource DisplayTitleStyle}"
+                            FontSize="38"
+                            Text="Customization complete"
+                            TextAlignment="Center" />
+                        <TextBlock
+                            x:Name="CompleteDescriptionText"
+                            FontSize="16"
+                            Foreground="{StaticResource SecondaryInkBrush}"
+                            LineHeight="25"
+                            Text="Your selected modules were installed successfully. Restart Explorer to refresh the desktop, or reboot Windows to finish every pending change."
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+
+                        <Border
+                            Margin="0,5,0,0"
+                            Padding="16,13"
+                            Background="{StaticResource SubtleSurfaceBrush}"
+                            BorderBrush="{StaticResource HairlineBrush}"
+                            BorderThickness="1"
+                            CornerRadius="13">
+                            <TextBlock
+                                x:Name="CompletionNoteText"
+                                FontSize="13"
+                                Foreground="{StaticResource SecondaryInkBrush}"
+                                Text="Your installation journal is saved. You can use “Revert to Windows Default” from the welcome screen at any time."
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </Border>
+
+                        <StackPanel
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="12">
+                            <Button
+                                x:Name="RestartExplorerButton"
+                                Content="Restart Explorer"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                AutomationProperties.Name="Restart Windows Explorer"
+                                Click="RestartExplorerButton_Click" />
+                            <Button
+                                x:Name="RebootButton"
+                                Content="Reboot System"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                AutomationProperties.Name="Reboot Windows"
+                                Click="RebootButton_Click" />
+                        </StackPanel>
+                        <Button
+                            HorizontalAlignment="Center"
+                            Content="Back to welcome"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Click="ReturnHomeButton_Click" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

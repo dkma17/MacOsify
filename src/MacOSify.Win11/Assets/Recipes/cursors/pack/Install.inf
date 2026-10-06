@@ -1,0 +1,46 @@
+[Version]
+Signature="$Windows NT$"
+Provider="macOSify Win11"
+
+[DefaultInstall]
+CopyFiles=Scheme.Files
+AddReg=Scheme.Reg
+
+[DestinationDirs]
+Scheme.Files = 10,Cursors\macOS
+
+[Scheme.Reg]
+HKCU,"Control Panel\Cursors",,0x00000000,"macOS Cursors"
+HKCU,"Control Panel\Cursors","Arrow",0x00020000,"%10%\Cursors\macOS\macOS_Arrow.cur"
+HKCU,"Control Panel\Cursors","Help",0x00020000,"%10%\Cursors\macOS\macOS_Help.cur"
+HKCU,"Control Panel\Cursors","AppStarting",0x00020000,"%10%\Cursors\macOS\macOS_Working.cur"
+HKCU,"Control Panel\Cursors","Wait",0x00020000,"%10%\Cursors\macOS\macOS_Busy.cur"
+HKCU,"Control Panel\Cursors","Crosshair",0x00020000,"%10%\Cursors\macOS\macOS_Precision.cur"
+HKCU,"Control Panel\Cursors","IBeam",0x00020000,"%10%\Cursors\macOS\macOS_Text.cur"
+HKCU,"Control Panel\Cursors","NWPen",0x00020000,"%10%\Cursors\macOS\macOS_Handwriting.cur"
+HKCU,"Control Panel\Cursors","No",0x00020000,"%10%\Cursors\macOS\macOS_Unavailable.cur"
+HKCU,"Control Panel\Cursors","SizeNS",0x00020000,"%10%\Cursors\macOS\macOS_ResizeNS.cur"
+HKCU,"Control Panel\Cursors","SizeWE",0x00020000,"%10%\Cursors\macOS\macOS_ResizeWE.cur"
+HKCU,"Control Panel\Cursors","SizeNWSE",0x00020000,"%10%\Cursors\macOS\macOS_ResizeNWSE.cur"
+HKCU,"Control Panel\Cursors","SizeNESW",0x00020000,"%10%\Cursors\macOS\macOS_ResizeNESW.cur"
+HKCU,"Control Panel\Cursors","SizeAll",0x00020000,"%10%\Cursors\macOS\macOS_Move.cur"
+HKCU,"Control Panel\Cursors","UpArrow",0x00020000,"%10%\Cursors\macOS\macOS_Alternate.cur"
+HKCU,"Control Panel\Cursors","Hand",0x00020000,"%10%\Cursors\macOS\macOS_Link.cur"
+HKCU,"Control Panel\Cursors","Scheme Source",0x00010001,1
+
+[Scheme.Files]
+macOS_Arrow.cur
+macOS_Help.cur
+macOS_Working.cur
+macOS_Busy.cur
+macOS_Precision.cur
+macOS_Text.cur
+macOS_Handwriting.cur
+macOS_Unavailable.cur
+macOS_ResizeNS.cur
+macOS_ResizeWE.cur
+macOS_ResizeNWSE.cur
+macOS_ResizeNESW.cur
+macOS_Move.cur
+macOS_Alternate.cur
+macOS_Link.cur
